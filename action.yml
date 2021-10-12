@@ -1,11 +1,34 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'PHP Insights'
+description: 'Runs PHP Insights'
+author: 'Novusvetus / Marcel Rudolf, Germany <development@novusvetus.de>'
 inputs:
-  milliseconds: # change this
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  files:
+    required: false
+    description: 'Files to check'
+    default: '**.php'
+  phpinsights_path:
+    required: false
+    description: 'Path to PHP Insights executable'
+    default: 'php ~/.composer/vendor/bin/phpinsights'
+  min_quality:
+    required: false
+    description: 'Min quality needed.'
+    default: 90
+  min_complexity:
+    required: false
+    description: 'Min complexity needed.'
+    default: 90
+  min_architecture:
+    required: false
+    description: 'Min architecture needed.'
+    default: 90
+  min_style:
+    required: false
+    description: 'Min style needed.'
+    default: 90
 runs:
   using: 'node12'
   main: 'dist/index.js'
+branding:
+  icon: 'check-circle'
+  color: 'gray-dark'

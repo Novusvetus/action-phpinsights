@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
+  "name": "action-phpinsights",
+  "version": "1.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "GitHub PHP Insights action. This workflow check the PHP files for the wanted coding standards and security issues.",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -10,33 +10,38 @@
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
     "package": "ncc build --source-map --license licenses.txt",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/Novusvetus/action-phpinsights.git"
   },
   "keywords": [
     "actions",
     "node",
     "setup"
   ],
-  "author": "",
-  "license": "MIT",
+  "author": "Novusvetus",
+  "license": "BSD-3",
   "dependencies": {
-    "@actions/core": "^1.4.0"
+    "@actions/core": "^1.5.0",
+    "@actions/github": "5.0.0",
+    "@octokit/webhooks": "9.17.0",
+    "picomatch": "2.3.0"
   },
   "devDependencies": {
-    "@types/node": "^16.3.3",
-    "@typescript-eslint/parser": "^4.28.3",
-    "@vercel/ncc": "^0.29.0",
+    "@types/node": "^16.10.3",
+    "@types/picomatch": "2.3.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "@vercel/ncc": "^0.31.1",
     "eslint": "^7.31.0",
-    "eslint-plugin-github": "^4.1.1",
-    "eslint-plugin-jest": "^24.3.6",
-    "jest": "^27.0.6",
+    "eslint-plugin-github": "^4.3.2",
+    "eslint-plugin-jest": "^25.0.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.2.5",
     "js-yaml": "^4.1.0",
-    "prettier": "2.2.1",
+    "prettier": "2.4.1",
     "ts-jest": "^27.0.3",
     "typescript": "^4.1.3"
   }
