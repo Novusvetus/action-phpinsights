@@ -1,7 +1,121 @@
 require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 6765:
+/***/ 7023:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __asyncValues = (this && this.__asyncValues) || function (o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getAllFiles = void 0;
+const core = __importStar(__nccwpck_require__(2186));
+const github = __importStar(__nccwpck_require__(5438));
+const readline_1 = __nccwpck_require__(4521);
+const fs_1 = __nccwpck_require__(7147);
+const picomatch_1 = __importDefault(__nccwpck_require__(8569));
+const child_process_1 = __nccwpck_require__(2081);
+function getAllFiles() {
+    var e_1, _a;
+    return __awaiter(this, void 0, void 0, function* () {
+        const pattern = core.getInput('files', {
+            required: false
+        });
+        const globs = pattern.length ? pattern.split(',') : ['**.php'];
+        const isMatch = (0, picomatch_1.default)(globs);
+        console.log('Filter patterns:', globs);
+        const payload = github.context;
+        try {
+            console.log(payload.sha);
+            const git = (0, child_process_1.spawn)('git', [
+                '--no-pager',
+                'ls-tree',
+                '--full-tree',
+                '--name-only',
+                '-r',
+                payload.sha
+            ], {
+                windowsHide: true,
+                timeout: 5000
+            });
+            const readline = (0, readline_1.createInterface)({
+                input: git.stdout
+            });
+            const result = {
+                files: []
+            };
+            try {
+                for (var readline_2 = __asyncValues(readline), readline_2_1; readline_2_1 = yield readline_2.next(), !readline_2_1.done;) {
+                    const line = readline_2_1.value;
+                    if (isMatch(line) && (0, fs_1.existsSync)(line)) {
+                        result.files.push(line);
+                    }
+                    else {
+                        console.log('Skip:', line);
+                    }
+                }
+            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+            finally {
+                try {
+                    if (readline_2_1 && !readline_2_1.done && (_a = readline_2.return)) yield _a.call(readline_2);
+                }
+                finally { if (e_1) throw e_1.error; }
+            }
+            return result;
+        }
+        catch (err) {
+            console.log('Error');
+            console.error(err);
+            return {
+                files: []
+            };
+        }
+    });
+}
+exports.getAllFiles = getAllFiles;
+
+
+/***/ }),
+
+/***/ 7990:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -155,12 +269,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
-const get_changed_file_1 = __nccwpck_require__(6765);
+const get_all_files_1 = __nccwpck_require__(7023);
+const get_changed_files_1 = __nccwpck_require__(7990);
 const run_on_files_1 = __nccwpck_require__(4755);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const files = yield (0, get_changed_file_1.getChangedFiles)();
+            const scan_all = core.getBooleanInput('scan_all', {
+                required: false
+            });
+            let files;
+            if (scan_all) {
+                files = yield (0, get_all_files_1.getAllFiles)();
+            }
+            else {
+                files = yield (0, get_changed_files_1.getChangedFiles)();
+            }
             core.info(JSON.stringify(files, null, 2));
             if (!files.files.length) {
                 return;
