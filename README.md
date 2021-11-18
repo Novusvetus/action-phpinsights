@@ -38,9 +38,10 @@ jobs:
           php composer.phar clearcache -q
           php ~/.composer/vendor/bin/phpinsights --version
 
-      - uses: Novusvetus/action-phpinsights@1.0.0
+      - uses: Novusvetus/action-phpinsights@1.1.0
         with:
           files: "**.php"
+          scan_all: true
           phpinsights_path: "php ~/.composer/vendor/bin/phpinsights"
           min_quality: 90
           min_complexity: 90
