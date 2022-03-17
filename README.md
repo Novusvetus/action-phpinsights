@@ -27,7 +27,7 @@ jobs:
   phpinsights:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # important!
 
@@ -38,7 +38,7 @@ jobs:
           php composer.phar clearcache -q
           php ~/.composer/vendor/bin/phpinsights --version
 
-      - uses: Novusvetus/action-phpinsights@1.1.2
+      - uses: Novusvetus/action-phpinsights@1.1.3
         with:
           files: "**.php"
           scan_all: true
