@@ -31,13 +31,13 @@
     "picomatch": "2.3.1"
   },
   "devDependencies": {
-    "@types/node": "^17.0.21",
+    "@types/node": "^17.0.23",
     "@types/picomatch": "2.3.0",
-    "@typescript-eslint/parser": "^5.15.0",
+    "@typescript-eslint/parser": "^5.16.0",
     "@vercel/ncc": "^0.33.3",
     "eslint": "^8.11.0",
-    "eslint-plugin-github": "^4.3.5",
-    "eslint-plugin-jest": "^26.1.1",
+    "eslint-plugin-github": "^4.3.6",
+    "eslint-plugin-jest": "^26.1.2",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.5.1",
     "js-yaml": "^4.1.0",
