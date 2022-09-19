@@ -34,6 +34,7 @@ jobs:
       - name: Install PHP Insights
         run: |
           curl -OL https://getcomposer.org/download/latest-2.x/composer.phar
+          php composer.phar global config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
           php composer.phar global require nunomaduro/phpinsights
           php composer.phar clearcache -q
           php ~/.composer/vendor/bin/phpinsights --version
