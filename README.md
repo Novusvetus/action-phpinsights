@@ -39,7 +39,7 @@ jobs:
           php composer.phar clearcache -q
           php ~/.composer/vendor/bin/phpinsights --version
 
-      - uses: Novusvetus/action-phpinsights@1.1.12
+      - uses: Novusvetus/action-phpinsights@1.1.13
         with:
           files: "**.php"
           scan_all: true
